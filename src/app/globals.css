@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --color-primary: #3b82f6;
+  --color-primary-foreground: #ffffff;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-dark: #1f2937;
+  --color-light: #f9fafb;
+}
+
+:root {
+  --primary: #3b82f6;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+}
+
+body {
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  background-color: var(--color-light);
+  color: #171717;
+  -webkit-font-smoothing: antialiased;
+}
+
+.bg-primary {
+  background-color: var(--primary);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.bg-success {
+  background-color: var(--success);
+}
+
+.bg-danger {
+  background-color: var(--danger);
+}
+
+.border-primary\/30 {
+  border-color: color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.bg-primary\/5 {
+  background-color: color-mix(in srgb, var(--primary) 5%, transparent);
+}
+
+.bg-primary\/10 {
+  background-color: color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+.hover\:bg-primary\/90:hover {
+  background-color: color-mix(in srgb, var(--primary) 90%, black);
+}
+
+@keyframes living-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.living-gradient-bg {
+  background-size: 400% 400%;
+  animation: living-gradient 15s ease infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.confetti-particle {
+  animation: confetti-fall 3s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
