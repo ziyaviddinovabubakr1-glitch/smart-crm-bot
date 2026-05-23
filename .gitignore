@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -40,3 +41,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+=======
+node_modules/
+.env
+.env.local
+*.log
+.DS_Store
+>>>>>>> 35efb1cb2b4000086e57e53ba12f7b35e4fed210

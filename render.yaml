@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: crm-telegram-bot
+    runtime: node
+    rootDir: bot
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: CRM_API_URL
+        sync: false
+      - key: CRM_WEBHOOK_SECRET
+        sync: false
+      - key: ADMIN_ID
+        sync: false
