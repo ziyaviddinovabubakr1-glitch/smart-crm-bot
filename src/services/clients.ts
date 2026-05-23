@@ -1,4 +1,4 @@
-import { getDb, newId, nowIso } from "@/lib/db";
+import { getDb, newId, nowIso, sqlParams } from "@/lib/db";
 import { mapClient, clientFullName } from "@/lib/db/mappers";
 import { canAccessAllData, userScopeClause } from "@/lib/auth/scope";
 import { assertUserExists, resolveUserInDatabase } from "@/lib/auth/session";
@@ -92,7 +92,7 @@ export async function getClients(query: ClientListQuery, session: SessionUser) {
 
   const total = db
     .prepare(`SELECT COUNT(*) as c FROM clients WHERE ${where}`)
-    .get(...params) as { c: number };
+    .get(...sqlParams(params)) as { c: number };
 
   const rows = db
     .prepare(
@@ -100,7 +100,7 @@ export async function getClients(query: ClientListQuery, session: SessionUser) {
        ORDER BY created_at DESC
        LIMIT ? OFFSET ?`
     )
-    .all(...params, limit, offset) as Record<string, unknown>[];
+    .all(...sqlParams(params), limit, offset) as Record<string, unknown>[];
 
   return {
     clients: rows.map(mapClient),

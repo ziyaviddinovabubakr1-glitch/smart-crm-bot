@@ -1,5 +1,5 @@
 import { emit } from "@/core/events";
-import { getDb, newId, nowIso } from "@/lib/db";
+import { getDb, newId, nowIso, sqlParams } from "@/lib/db";
 import { mapDealWithClient } from "@/lib/db/mappers";
 import { userScopeClause } from "@/lib/auth/scope";
 import type { DealStage, DealWithClient, SessionUser } from "@/types";
@@ -26,7 +26,7 @@ export async function getDeals(session: SessionUser, clientId?: string) {
        WHERE ${conditions.join(" AND ")}
        ORDER BY d.updated_at DESC`
     )
-    .all(...queryParams) as Record<string, unknown>[];
+    .all(...sqlParams(queryParams)) as Record<string, unknown>[];
 
   return rows.map(mapDealWithClient) as DealWithClient[];
 }
@@ -98,7 +98,6 @@ export async function createDeal(
     now
   );
 
-  emit("deal.created", { dealId: id, clientId: input.client_id, userId: session.id });
   return getDealById(id, session);
 }
 
@@ -113,7 +112,7 @@ export async function updateDealStage(session: SessionUser, id: string, stage: D
   ).run(stage, session.id, now, id);
 
   if (stage === "closed") {
-    emit("deal.won", { dealId: id, clientId: existing.client_id });
+    await emit({ type: "deal.won", leadId: id });
     const { createNotification } = await import("@/services/notifications");
     await createNotification(session.id, {
       type: "deal",
@@ -122,7 +121,7 @@ export async function updateDealStage(session: SessionUser, id: string, stage: D
       href: `/deals/${id}`,
     });
   } else if (stage === "rejected") {
-    emit("deal.lost", { dealId: id, clientId: existing.client_id });
+    await emit({ type: "deal.lost", leadId: id });
   }
 
   return getDealById(id, session);
@@ -166,9 +165,9 @@ export async function updateDeal(
   );
 
   if (input.stage === "closed") {
-    emit("deal.won", { dealId: id, clientId: existing.client_id });
+    await emit({ type: "deal.won", leadId: id });
   } else if (input.stage === "rejected") {
-    emit("deal.lost", { dealId: id, clientId: existing.client_id });
+    await emit({ type: "deal.lost", leadId: id });
   }
 
   return getDealById(id, session);

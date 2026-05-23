@@ -364,6 +364,7 @@ export function OnboardingWizard() {
                 : "Далее"}
           </Button>
         </div>
+        </div>
       </div>
     </LivingBackground>
   );

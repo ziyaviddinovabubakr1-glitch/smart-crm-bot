@@ -8,7 +8,9 @@ export async function POST(
 ) {
   return withWriteSession(request, async (session) => {
     const { id } = await params;
-    const body = await parseJsonBody<{ reanalyze?: boolean }>(request).catch(() => ({}));
+    const body = await parseJsonBody<{ reanalyze?: boolean }>(request).catch(
+      (): { reanalyze?: boolean } => ({})
+    );
 
     const communication = await analyzeCommunicationById(session, id);
     if (!communication) return jsonError("Not found", 404);

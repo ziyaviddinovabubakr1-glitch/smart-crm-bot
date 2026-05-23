@@ -52,7 +52,7 @@ export function ClientEditForm({
       </div>
       <div>
         <Label htmlFor="phone">Телефон</Label>
-        <Input id="phone" name="phone" defaultValue={client.phone} required className="mt-1" />
+        <Input id="phone" name="phone" defaultValue={client.phone ?? ""} required className="mt-1" />
       </div>
       <div>
         <Label htmlFor="email">Email</Label>

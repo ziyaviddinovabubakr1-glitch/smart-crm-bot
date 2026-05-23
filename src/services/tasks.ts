@@ -1,4 +1,4 @@
-import { getDb, newId, nowIso } from "@/lib/db";
+import { getDb, newId, nowIso, sqlParams } from "@/lib/db";
 import { mapTask } from "@/lib/db/mappers";
 import { userScopeClause } from "@/lib/auth/scope";
 import { createNotification } from "@/services/notifications";
@@ -37,7 +37,7 @@ export async function getTasks(
          t.due_date ASC,
          t.created_at DESC`
     )
-    .all(...queryParams) as Record<string, unknown>[];
+    .all(...sqlParams(queryParams)) as Record<string, unknown>[];
 
   return rows.map((row) => ({
     ...mapTask(row),

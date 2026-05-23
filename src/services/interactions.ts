@@ -1,5 +1,5 @@
 import { analyzeCommunication } from "@/lib/ai/analyze-communication";
-import { getDb, newId, nowIso } from "@/lib/db";
+import { getDb, newId, nowIso, sqlParams } from "@/lib/db";
 import { clientFullName, mapClientNote, mapInteraction } from "@/lib/db/mappers";
 import { userScopeClause } from "@/lib/auth/scope";
 import { getClientById } from "@/services/clients";
@@ -95,7 +95,7 @@ export async function getInteractionsByClient(
        ORDER BY COALESCE(start_time, created_at) DESC
        LIMIT ?`
     )
-    .all(...values, limit) as Record<string, unknown>[];
+    .all(...sqlParams(values), limit) as Record<string, unknown>[];
 
   return rows.map(mapInteraction);
 }

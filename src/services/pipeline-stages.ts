@@ -20,8 +20,8 @@ export async function updatePipelineStage(
   if (!existing) return null;
 
   db.prepare("UPDATE pipeline_stages SET label = ?, sort_order = ? WHERE id = ?").run(
-    input.label ?? existing.label,
-    input.sort_order ?? existing.sort_order,
+    String(input.label ?? existing.label),
+    Number(input.sort_order ?? existing.sort_order ?? 0),
     id
   );
 

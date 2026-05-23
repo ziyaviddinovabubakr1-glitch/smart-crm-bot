@@ -1,4 +1,4 @@
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync, type SQLInputValue } from "node:sqlite";
 import fs from "fs";
 import path from "path";
 import { SCHEMA } from "./schema";
@@ -31,4 +31,8 @@ export function newId() {
 
 export function nowIso() {
   return new Date().toISOString();
+}
+
+export function sqlParams(values: readonly unknown[]): SQLInputValue[] {
+  return values as SQLInputValue[];
 }

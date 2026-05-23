@@ -63,7 +63,7 @@ export function DealDetail({
                   <Button
                     key={stage.id}
                     size="sm"
-                    variant={deal.stage === stage.value ? "default" : "outline"}
+                    variant={deal.stage === stage.value ? "primary" : "outline"}
                     disabled={pending || deal.stage === stage.value}
                     onClick={() =>
                       startTransition(async () => {

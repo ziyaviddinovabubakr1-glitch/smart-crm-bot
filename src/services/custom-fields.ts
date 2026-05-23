@@ -59,7 +59,7 @@ export async function updateClientFieldDefinition(
   if (!row) return null;
 
   db.prepare("UPDATE client_field_definitions SET label = ?, options = ? WHERE id = ?").run(
-    input.label ?? row.label,
+    String(input.label ?? row.label),
     JSON.stringify(input.options ?? JSON.parse(String(row.options ?? "[]"))),
     id
   );

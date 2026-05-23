@@ -43,7 +43,6 @@ export async function updateNotificationSettingsAction(formData: FormData) {
     in_app_enabled: formData.get("in_app_enabled") !== "off",
   });
   revalidatePath("/settings");
-  return { ok: true };
 }
 
 export async function updateStageAction(formData: FormData) {
@@ -74,10 +73,9 @@ export async function deleteStageAction(formData: FormData) {
   const session = await requireSession();
   ensureAdmin(session.role);
 
-  const result = await deletePipelineStage(String(formData.get("id")));
+  await deletePipelineStage(String(formData.get("id")));
   revalidatePath("/settings");
   revalidatePath("/deals");
-  return result;
 }
 
 export async function addCustomFieldAction(formData: FormData) {

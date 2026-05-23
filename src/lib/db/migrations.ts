@@ -647,11 +647,11 @@ function migrateToCrmCore(db: DatabaseSync) {
       userId,
       first_name,
       last_name,
-      lead.phone ?? null,
-      lead.email ?? null,
-      lead.source ?? "manual",
-      lead.tags ?? "[]",
-      lead.created_at,
+      (lead.phone as string | null | undefined) ?? null,
+      (lead.email as string | null | undefined) ?? null,
+      (lead.source as string | null | undefined) ?? "manual",
+      typeof lead.tags === "string" ? lead.tags : JSON.stringify(lead.tags ?? []),
+      lead.created_at as string,
       now
     );
 
@@ -661,8 +661,8 @@ function migrateToCrmCore(db: DatabaseSync) {
       userId,
       `Сделка: ${lead.name}`,
       mapLeadStatusToStage(lead.status as string),
-      lead.message ?? null,
-      lead.created_at,
+      (lead.message as string | null | undefined) ?? null,
+      lead.created_at as string,
       now
     );
   }
